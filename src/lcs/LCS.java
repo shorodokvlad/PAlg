@@ -54,42 +54,7 @@ public class LCS {
         int[][] lung = LCS(a, n, a2, n);
         TiparesteLCS(a, n, a2, n, lung);
     }
-
-    static int[][] LCS_Ternar(int[] a, int n, int[] b, int m) {
-        int[][] lung = new int[n][m];
-
-        // rezolvăm subproblemele simple - prima celulă
-        lung[0][0] = (a[0] == b[0]) ? 1 : 0;
-
-        // rezolvăm subproblemele simple - prima coloană
-        for (int i = 1; i < n; i++) {
-            if (a[i] == b[0]) {
-                lung[i][0] = 1;
-            } else {
-                lung[i][0] = lung[i - 1][0];
-            }
-        }
-
-        // rezolvăm subproblemele simple - primul rând
-        for (int j = 1; j < m; j++) {
-            if (a[0] == b[j]) {
-                lung[0][j] = 1;
-            } else {
-                lung[0][j] = lung[0][j - 1];
-            }
-        }
-
-        // completăm matricea lung
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                int diagonala = (a[i] == b[j]) ? lung[i - 1][j - 1] + 1 : 0;
-                lung[i][j] = Math.max(diagonala, Math.max(lung[i - 1][j], lung[i][j - 1]));
-            }
-        }
-
-        return lung;
-    }
-
+    
     static int[][] LCS(int[] a, int n, int[] b, int m) {
         int[][] lung = new int[n][m];
 
