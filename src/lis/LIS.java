@@ -39,8 +39,8 @@ public class LIS {
     public static int[] LIS(int[] a) {
         int n = a.length;
         int[] lung = new int[n];
-
         lung[n - 1] = 1;
+
         for (int i = n - 2; i >= 0; i--) {
             int max = 0;
             for (int j = i + 1; j < n; j++) {
@@ -64,19 +64,18 @@ public class LIS {
         }
 
         printWriter.println(max);
-
         printWriter.print(a[poz] + " ");
 
+        int lungRamasa = max - 1;
+
         for (int i = poz + 1; i < n; i++) {
-            if (lung[i] == max - 1 && a[i] >= a[poz]) {
+            if (lung[i] == lungRamasa && a[i] >= a[poz]) {
                 printWriter.print(a[i] + " ");
 
                 poz = i;
-                max = max - 1;
+                lungRamasa--;
 
-                if (max == 0) {
-                    break;
-                }
+                if (lungRamasa == 0) break;
             }
         }
         printWriter.println();

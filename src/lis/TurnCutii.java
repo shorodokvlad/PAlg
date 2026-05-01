@@ -73,20 +73,18 @@ public class TurnCutii {
             }
         }
         printWriter.println(max);
-
         printWriter.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
 
-        int rest = max - 1;
-        int ariaAnterioara = aria[poz];
+        int lungRamas = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
-            if (lung[i] == rest && aria[i] <= ariaAnterioara) {
+            if (lung[i] == lungRamas && aria[i] <= aria[poz]) {
                 printWriter.println(lungime[i] + " " + latime[i] + " " + h[i]);
 
-                ariaAnterioara = aria[i];
-                rest--;
+                aria[poz] = aria[i];
+                lungRamas--;
 
-                if (rest == 0) break;
+                if (lungRamas == 0) break;
             }
         }
     }

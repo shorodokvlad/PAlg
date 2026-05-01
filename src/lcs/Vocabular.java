@@ -28,7 +28,6 @@ public class Vocabular {
             for (int k = 0; k < m; k++) {
                 String cuvant = sc.next();
 
-                // găsim cuvântul din dicționar cu LCS maxim față de cuvântul utilizatorului
                 String celMaiBun = dictionar[0];
                 int lcsMax = lungimeLCS(cuvant, dictionar[0]);
 
@@ -42,9 +41,6 @@ public class Vocabular {
 
                 printWriter.println(celMaiBun);
             }
-
-
-
 
         } catch (Exception e) {
             e.printStackTrace();

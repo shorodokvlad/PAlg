@@ -23,6 +23,8 @@ public class Excursii2 {
                 int n = Integer.parseInt(sc.nextLine().trim());
 
                 String[] orase = new String[n];
+
+
                 int citite = 0;
                 while (citite < n) {
                     String[] peLiniaAsta = sc.nextLine().trim().split("\\s+");
@@ -54,7 +56,6 @@ public class Excursii2 {
         for (int i = n - 2; i >= 0; i--) {
             int max = 0;
             for (int j = i + 1; j < n; j++) {
-                // în loc de a[i] <= a[j], comparăm alfabetic
                 if (a[i].compareTo(a[j]) < 0 && lung[j] > max) {
                     max = lung[j];
                 }
