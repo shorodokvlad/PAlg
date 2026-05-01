@@ -72,10 +72,8 @@ public class TurnCutii {
                 poz = i;
             }
         }
-        System.out.println(max);
         printWriter.println(max);
 
-        System.out.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
         printWriter.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
 
         int rest = max - 1;
@@ -83,7 +81,6 @@ public class TurnCutii {
 
         for (int i = poz + 1; i < n; i++) {
             if (lung[i] == rest && aria[i] <= ariaAnterioara) {
-                System.out.println(lungime[i] + " " + latime[i] + " " + h[i]);
                 printWriter.println(lungime[i] + " " + latime[i] + " " + h[i]);
 
                 ariaAnterioara = aria[i];

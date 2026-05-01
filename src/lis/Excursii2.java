@@ -32,7 +32,13 @@ public class Excursii2 {
                 }
 
                 int[] lung = LIS(orase);
-                printWriter.println(lungimeMaxima(lung));
+
+                int maxLung = 0;
+                for (int val : lung) {
+                    if (val > maxLung) maxLung = val;
+                }
+
+                writer.println(maxLung);
             }
 
         } catch (Exception e) {
@@ -57,15 +63,5 @@ public class Excursii2 {
         }
 
         return lung;
-    }
-
-    public static int lungimeMaxima(int[] lung) {
-        int max = lung[0];
-        for (int i = 1; i < lung.length; i++) {
-            if (lung[i] > max) {
-                max = lung[i];
-            }
-        }
-        return max;
     }
 }

@@ -109,6 +109,7 @@ public class LCS {
         Collections.reverse(subsecventa);
 
         System.out.println(subsecventa.size());
+
         for (int x : subsecventa) {
             System.out.print(x + " ");
         }
