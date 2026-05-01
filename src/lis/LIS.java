@@ -63,14 +63,13 @@ public class LIS {
             }
         }
 
-        System.out.println("Lungimea maxima este " + max);
-        System.out.print("Iar subsecventa este: ");
+        printWriter.println(max);
 
-        System.out.print(a[poz] + " ");
+        printWriter.print(a[poz] + " ");
 
         for (int i = poz + 1; i < n; i++) {
             if (lung[i] == max - 1 && a[i] >= a[poz]) {
-                System.out.print(a[i] + " ");
+                printWriter.print(a[i] + " ");
 
                 poz = i;
                 max = max - 1;
@@ -80,7 +79,7 @@ public class LIS {
                 }
             }
         }
-        System.out.println();
+        printWriter.println();
     }
 
 }

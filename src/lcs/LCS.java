@@ -2,6 +2,9 @@ package lcs;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class LCS {
@@ -34,9 +37,8 @@ public class LCS {
 
 
                 int[][] lung = LCS(a, n, b, m);
-                TiparesteLCS(a, n, b, m, lung);
+                tiparesteLCS(a, b, lung);
 
-                //CelMaiLungPalindrom(a, a.length);
             }
 
         } catch (Exception e) {
@@ -44,16 +46,6 @@ public class LCS {
         }
     }
 
-    public static void CelMaiLungPalindrom(int[] a, int n) {
-        int[] a2 = new int[n];
-
-        for (int i = 0; i < n - 1; i++) {
-            a2[i] = a[n - 1 - i];
-        }
-
-        int[][] lung = LCS(a, n, a2, n);
-        TiparesteLCS(a, n, a2, n, lung);
-    }
     
     static int[][] LCS(int[] a, int n, int[] b, int m) {
         int[][] lung = new int[n][m];
@@ -95,37 +87,31 @@ public class LCS {
         return lung;
     }
 
-    static void TiparesteLCS(int[] a, int n, int[] b, int m, int[][] lung) {
-        printWriter.println("Lungimea maxima: " + lung[n - 1][m - 1]);
-        printWriter.print("Subsecventa este: ");
-
-        int[] rezultat = new int[lung[n - 1][m - 1]];
-        int idx = rezultat.length - 1;
-
-        int i = n - 1;
-        int j = m - 1;
+    public static void tiparesteLCS(int[] a, int[] b, int[][] lung) {
+        List<Integer> subsecventa = new ArrayList<>();
+        int i = a.length - 1;
+        int j = b.length - 1;
 
         while (i >= 0 && j >= 0) {
             if (a[i] == b[j]) {
-                rezultat[idx--] = a[i];
+                subsecventa.add(a[i]);
                 i--;
                 j--;
+            } else if (i >= 1 && lung[i - 1][j] == lung[i][j]) {
+                i--;
+            } else if (j >= 1 && lung[i][j - 1] == lung[i][j]) {
+                j--;
             } else {
-                if (i - 1 >= 0 && lung[i][j] == lung[i - 1][j]) {
-                    i--;
-                } else {
-                    j--;
-                }
+                break;
             }
         }
 
-        for (int k = 0; k < rezultat.length; k++) {
-            printWriter.print(rezultat[k]);
-            if (k < rezultat.length - 1) {
-                printWriter.print(" ");
-            }
+        Collections.reverse(subsecventa);
+
+        System.out.println(subsecventa.size());
+        for (int x : subsecventa) {
+            System.out.print(x + " ");
         }
-        printWriter.println();
     }
 
 }

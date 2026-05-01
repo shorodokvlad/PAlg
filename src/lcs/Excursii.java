@@ -2,10 +2,7 @@ package lcs;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Excursii {
 
@@ -46,7 +43,6 @@ public class Excursii {
         }
     }
 
-    // returnează lista ce reprezintă LCS-ul dintre cele două șiruri
     static List<String> calculeazaLCS(List<String> a, List<String> b) {
         int n = a.size();
         int m = b.size();
@@ -64,19 +60,22 @@ public class Excursii {
         }
 
         List<String> rezultat = new ArrayList<>();
-        int i = n, j = m;
+        int i = n;
+        int j = m;
 
         while (i > 0 && j > 0) {
             if (a.get(i - 1).equals(b.get(j - 1))) {
-                rezultat.add(0, a.get(i - 1));
+                rezultat.add(a.get(i - 1));
                 i--;
                 j--;
-            } else if (lung[i - 1][j] >= lung[i][j - 1]) {
+            } else if (lung[i - 1][j] == lung[i][j]) {
                 i--;
             } else {
                 j--;
             }
         }
+
+        Collections.reverse(rezultat);
 
         return rezultat;
     }

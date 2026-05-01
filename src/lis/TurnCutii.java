@@ -1,11 +1,11 @@
 package lis;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class TurnCutii {
-
     static PrintWriter printWriter;
 
     public static void main(String[] args) {
@@ -17,79 +17,81 @@ public class TurnCutii {
 
             printWriter = writer;
 
-            int n = sc.nextInt();
-            int[] lungime  = new int[n];
-            int[] latime   = new int[n];
-            int[] inaltime = new int[n];
-            int[] arie     = new int[n];
+            while (sc.hasNext()) {
+                int n = sc.nextInt();
+                int[] lungime = new int[n];
+                int[] latime = new int[n];
+                int[] inaltime = new int[n];
 
-            for (int i = 0; i < n; i++) {
-                lungime[i]  = sc.nextInt();
-                latime[i]   = sc.nextInt();
-                inaltime[i] = sc.nextInt();
-                arie[i]     = lungime[i] * latime[i];
+                for (int i = 0; i < n; i++) {
+                    lungime[i] = sc.nextInt();
+                    latime[i] = sc.nextInt();
+                    inaltime[i] = sc.nextInt();
+                }
+
+                int[] aria = new int[n];
+                for (int i = 0; i < n; i++)
+                    aria[i] = lungime[i] * latime[i];
+
+                int[] lung = LIS(lungime, aria);
+                TiparesteLIS(lung, lungime, latime, inaltime, aria);
             }
-
-            int[] dp = calculeazaDP(arie, n);
-
-            tiparesteTurn(dp, arie, lungime, latime, inaltime, n, writer);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // dp[i] = numărul maxim de cutii în turn care se termină cu cutia i
-    public static int[] calculeazaDP(int[] arie, int n) {
-        int[] dp = new int[n];
+    public static int[] LIS(int[] lungime, int[] aria) {
+        int n = lungime.length;
+        int[] lung = new int[n];
+
+        lung[n - 1] = 1;
+
+        for (int i = n - 2; i >= 0; i--) {
+            int max = 0;
+            for (int j = i + 1; j < n; j++) {
+                if (aria[i] >= aria[j]) {
+                    if (max < lung[j])
+                        max = lung[j];
+                }
+            }
+            lung[i] = max + 1;
+        }
+        return lung;
+    }
+
+    public static void TiparesteLIS(int[] lung, int[] lungime, int[] latime, int[] h, int[] aria) {
+        int n = lung.length;
+        int max = 0;
+        int poz = 0;
 
         for (int i = 0; i < n; i++) {
-            dp[i] = 1; // turnul format doar din cutia i
-
-            for (int j = 0; j < i; j++) {
-                // cutia i poate sta deasupra cutiei j
-                if (arie[i] <= arie[j] && dp[j] + 1 > dp[i]) {
-                    dp[i] = dp[j] + 1;
-                }
+            if (max < lung[i]) {
+                max = lung[i];
+                poz = i;
             }
         }
+        System.out.println(max);
+        printWriter.println(max);
 
-        return dp;
+        System.out.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
+        printWriter.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
+
+        int rest = max - 1;
+        int ariaAnterioara = aria[poz];
+
+        for (int i = poz + 1; i < n; i++) {
+            if (lung[i] == rest && aria[i] <= ariaAnterioara) {
+                System.out.println(lungime[i] + " " + latime[i] + " " + h[i]);
+                printWriter.println(lungime[i] + " " + latime[i] + " " + h[i]);
+
+                ariaAnterioara = aria[i];
+                rest--;
+
+                if (rest == 0) break;
+            }
+        }
     }
 
-    public static void tiparesteTurn(int[] dp, int[] arie, int[] lungime,
-                                     int[] latime, int[] inaltime, int n,
-                                     PrintWriter writer) {
-        int maxCutii = dp[0];
-        int pozFinal = 0;
-        for (int i = 1; i < n; i++) {
-            if (dp[i] > maxCutii) {
-                maxCutii = dp[i];
-                pozFinal = i;
-            }
-        }
-
-        int[] turn = new int[n];
-        int lungimeTurn = 0;
-        int poz = pozFinal;
-
-        while (poz != -1) {
-            turn[lungimeTurn++] = poz;
-
-            int urmator = -1;
-            for (int j = poz - 1; j >= 0; j--) {
-                if (arie[poz] <= arie[j] && dp[j] == dp[poz] - 1) {
-                    urmator = j;
-                    break;
-                }
-            }
-            poz = urmator;
-        }
-
-        writer.println(maxCutii);
-        for (int i = 0; i < lungimeTurn; i++) {
-            int idx = turn[i];
-            writer.println(lungime[idx] + " " + latime[idx] + " " + inaltime[idx]);
-        }
-    }
 }

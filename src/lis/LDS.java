@@ -60,20 +60,20 @@ public class LDS {
                 poz = i;
             }
         }
-        System.out.println(max);
-        System.out.print(a[poz] + " ");
+        printWriter.println(max);
+        printWriter.print(a[poz] + " ");
         int lungRamasa = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
             if (a[i] < a[poz] && lung[i] == lungRamasa) {
-                System.out.print(a[i] + " ");
+                printWriter.print(a[i] + " ");
                 poz = i;
                 lungRamasa--;
 
                 if (lungRamasa == 0) break;
             }
         }
-        System.out.println();
+        printWriter.println();
     }
 
     public static int[] LDSImpar(int[] a) {
