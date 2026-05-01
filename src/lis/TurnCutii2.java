@@ -42,6 +42,7 @@ public class TurnCutii2 {
 
     public static int[] LIS(int[] g, int[] w, int n) {
         int[] lung = new int[n];
+
         for (int i = n - 1; i >= 0; i--) {
             int max = 0;
             for (int j = i + 1; j < n; j++) {
@@ -66,16 +67,17 @@ public class TurnCutii2 {
         }
 
         writer.println(max);
-
-        int curent = poz;
-        writer.println(g[curent] + " " + w[curent]);
+        writer.println(g[poz] + " " + w[poz]);
+        
         int lungimeRamasa = max - 1;
 
         for (int i = poz + 1; i < n && lungimeRamasa > 0; i++) {
-            if (lung[i] == lungimeRamasa && w[curent] >= g[i]) {
+            if (lung[i] == lungimeRamasa && w[poz] >= g[i]) {
                 writer.println(g[i] + " " + w[i]);
-                curent = i;
+                poz = i;
                 lungimeRamasa--;
+
+                if (lungimeRamasa == 0) break;
             }
         }
     }
