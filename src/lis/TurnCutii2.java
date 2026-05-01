@@ -68,7 +68,7 @@ public class TurnCutii2 {
 
         writer.println(max);
         writer.println(g[poz] + " " + w[poz]);
-        
+
         int lungimeRamasa = max - 1;
 
         for (int i = poz + 1; i < n && lungimeRamasa > 0; i++) {
