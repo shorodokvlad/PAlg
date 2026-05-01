@@ -67,12 +67,16 @@ public class Fazan {
         printWriter.println(max);
         printWriter.println(cuvinte[poz]);
 
+        int lungRamasa = max - 1;
+
         for (int i = poz + 1; i < n; i++) {
-            if (lung[i] == max - 1 && esteSuccesor(cuvinte[poz], cuvinte[i])) {
+            if (lung[i] == lungRamasa && esteSuccesor(cuvinte[poz], cuvinte[i])) {
                 printWriter.println(cuvinte[i]);
+
                 poz = i;
-                max = max - 1;
-                if (max == 0) break;
+                lungRamasa--;
+
+                if (lungRamasa == 0) break;
             }
         }
     }

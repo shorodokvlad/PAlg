@@ -27,14 +27,11 @@ public class LCS {
                     a[i] = sc.nextInt();
                 }
 
-
                 int m = sc.nextInt();
                 int[] b = new int[m];
                 for (int j = 0; j < m; j++) {
                     b[j] = sc.nextInt();
                 }
-
-
 
                 int[][] lung = LCS(a, n, b, m);
                 tiparesteLCS(a, b, lung);

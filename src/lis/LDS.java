@@ -65,7 +65,7 @@ public class LDS {
         int lungRamasa = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
-            if (a[i] < a[poz] && lung[i] == lungRamasa) {
+            if (lung[i] == lungRamasa && a[i] < a[poz]) {
                 printWriter.print(a[i] + " ");
                 poz = i;
                 lungRamasa--;

@@ -76,7 +76,7 @@ public class TurnCuburi {
             }
         }
 
-        boolean[] ramaneA = new boolean[n + 1]; // 1-based
+        boolean[] ramaneA = new boolean[n + 1];
         boolean[] ramaneB = new boolean[m + 1];
 
         for (int idx : pozA) ramaneA[idx] = true;

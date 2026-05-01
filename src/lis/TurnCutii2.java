@@ -77,15 +77,15 @@ public class TurnCutii2 {
         printWriter.println(max);
         printWriter.println(g[poz] + " " + w[poz]);
 
-        int lungimeRamasa = max - 1;
+        int lungRamas = max - 1;
 
-        for (int i = poz + 1; i < n && lungimeRamasa > 0; i++) {
-            if (lung[i] == lungimeRamasa && w[poz] >= g[i]) {
+        for (int i = poz + 1; i < n && lungRamas > 0; i++) {
+            if (lung[i] == lungRamas && g[i] <= w[poz]) {
                 printWriter.println(g[i] + " " + w[i]);
                 poz = i;
-                lungimeRamasa--;
+                lungRamas--;
 
-                if (lungimeRamasa == 0) break;
+                if (lungRamas == 0) break;
             }
         }
     }
