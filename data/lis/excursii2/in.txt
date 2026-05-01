@@ -1,0 +1,9 @@
+3
+5
+Paris Roma Milano Bucuresti Praga
+6
+Roma Amsterdam Milano Praga Sofia
+Budapesta
+7
+Londra Paris Roma Venetia Milano
+Barcelona Praga
