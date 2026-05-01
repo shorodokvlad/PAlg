@@ -3,6 +3,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class TurnCutii2 {
+    static PrintWriter printWriter;
 
     public static void main(String[] args) {
         String caleFisierIn = "data/lis/cutii2/in.txt";
@@ -10,6 +11,8 @@ public class TurnCutii2 {
 
         try (Scanner sc = new Scanner(new File(caleFisierIn));
              PrintWriter writer = new PrintWriter(new File(caleFisierOut))) {
+
+            printWriter = writer;
 
             if (!sc.hasNextInt()) return;
             int n = sc.nextInt();
@@ -26,14 +29,19 @@ public class TurnCutii2 {
             for (int i = 0; i < n - 1; i++) {
                 for (int j = i + 1; j < n; j++) {
                     if (g[i] < g[j]) {
-                        int tempG = g[i]; g[i] = g[j]; g[j] = tempG;
-                        int tempW = w[i]; w[i] = w[j]; w[j] = tempW;
+                        int tempG = g[i];
+                        g[i] = g[j];
+                        g[j] = tempG;
+
+                        int tempW = w[i];
+                        w[i] = w[j];
+                        w[j] = tempW;
                     }
                 }
             }
 
             int[] lung = LIS(g, w, n);
-            TiparesteLIS(g, w, n, lung, writer);
+            TiparesteLIS(g, w, n, lung);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +63,7 @@ public class TurnCutii2 {
         return lung;
     }
 
-    public static void TiparesteLIS(int[] g, int[] w, int n, int[] lung, PrintWriter writer) {
+    public static void TiparesteLIS(int[] g, int[] w, int n, int[] lung) {
         int max = 0;
         int poz = 0;
 
@@ -66,14 +74,14 @@ public class TurnCutii2 {
             }
         }
 
-        writer.println(max);
-        writer.println(g[poz] + " " + w[poz]);
+        printWriter.println(max);
+        printWriter.println(g[poz] + " " + w[poz]);
 
         int lungimeRamasa = max - 1;
 
         for (int i = poz + 1; i < n && lungimeRamasa > 0; i++) {
             if (lung[i] == lungimeRamasa && w[poz] >= g[i]) {
-                writer.println(g[i] + " " + w[i]);
+                printWriter.println(g[i] + " " + w[i]);
                 poz = i;
                 lungimeRamasa--;
 

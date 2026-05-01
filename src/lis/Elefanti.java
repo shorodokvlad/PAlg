@@ -51,7 +51,6 @@ public class Elefanti {
         }
     }
 
-
     public static int[] LIS(int[] a) {
         int n = a.length;
         int[] lung = new int[n];
