@@ -23,22 +23,12 @@ public class LIS {
                 int n = sc.nextInt();
                 int[] arr = new int[n];
 
-                int countPare = 0;
                 for (int i = 0; i < n; i++) {
                     arr[i] = sc.nextInt();
-                    if (arr[i] % 2 == 0) countPare++;
                 }
-
-                int[] doarPare = new int[countPare];
-                int idx = 0;
-                for (int i = 0; i < n; i++) {
-                    if (arr[i] % 2 == 0) {
-                        doarPare[idx++] = arr[i];
-                    }
-                }
-
-                int[] lung = LIS(doarPare);
-                TiparesteLIS(doarPare, lung.length, lung);
+                
+                int[] lung = LIS(arr);
+                TiparesteLIS(arr, lung.length, lung);
             }
 
         } catch (Exception e) {
