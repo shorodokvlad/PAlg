@@ -23,17 +23,44 @@ public class LIS {
                 int n = sc.nextInt();
                 int[] arr = new int[n];
 
+                int count = 0;
                 for (int i = 0; i < n; i++) {
                     arr[i] = sc.nextInt();
+                    if (estePrim(arr[i]))
+                        count++;
                 }
-                
-                int[] lung = LIS(arr);
-                TiparesteLIS(arr, lung.length, lung);
+
+                int[] arr2 = new int[count];
+                int idx = 0;
+                for (int i = 0; i < n; i++) {
+                    if (estePrim(arr[i])) {
+                        arr2[idx++] = arr[i];
+                    }
+                }
+                int[] lung = LIS(arr2);
+                TiparesteLIS(arr2, lung.length, lung);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean estePrim(int n) {
+        if (n < 2) return false;
+        for (int d = 2; d * d <= n; d++) {
+            if (n % d == 0) return false;
+        }
+        return true;
+    }
+
+    public static boolean estePatratPerfect(int x) {
+        int s = (int) Math.sqrt(x);
+        return (s * s == x);
+    }
+
+    public static boolean esteFibonacci(int n) {
+        return estePatratPerfect(5 * n * n + 4) || estePatratPerfect(5 * n * n - 4);
     }
 
     public static int[] LIS(int[] a) {
@@ -80,5 +107,5 @@ public class LIS {
         }
         printWriter.println();
     }
-
 }
+
