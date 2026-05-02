@@ -1,0 +1,10 @@
+Lungime drum: 3
+Numar drumuri minime: 2
+Drum 1:
+  2 1
+  1 2
+  2 3
+Drum 2:
+  2 1
+  3 2
+  2 3

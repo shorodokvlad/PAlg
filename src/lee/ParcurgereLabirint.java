@@ -3,7 +3,7 @@ package lee;
 import java.util.*;
 import java.io.*;
 
-public class ParcurgereaLabirintului {
+public class ParcurgereLabirint {
     public static class Locatie {
         public int linie, coloana;
         public Locatie(int l, int c) {
@@ -21,45 +21,50 @@ public class ParcurgereaLabirintului {
         try (PrintWriter writer = new PrintWriter(new File(caleFisierOut))){
             Scanner scanner = new Scanner(new File(caleFisierIn));
 
-            int m = scanner.nextInt();
-            int n = scanner.nextInt();
-            scanner.nextLine();
+            int T = scanner.nextInt();
 
-            int[][] labirint = new int[m][n];
+            for (int t = 0; t < T; t++) {
+                int m = scanner.nextInt();
+                int n = scanner.nextInt();
+                scanner.nextLine();
 
-            for (int i = 0; i < m; i++) {
-                String linieText = scanner.nextLine().trim();
-                String procesat = linieText.replace("-", " -").replace("0", " 0 ");
-                Scanner linieScanner = new Scanner(procesat);
-                for (int j = 0; j < n; j++) {
-                    if (linieScanner.hasNextInt()) {
-                        labirint[i][j] = linieScanner.nextInt();
+                int[][] labirint = new int[m][n];
+
+                for (int i = 0; i < m; i++) {
+                    String linieText = scanner.nextLine().trim();
+                    String procesat = linieText.replace("-", " -").replace("0", " 0 ");
+                    Scanner linieScanner = new Scanner(procesat);
+                    for (int j = 0; j < n; j++) {
+                        if (linieScanner.hasNextInt()) {
+                            labirint[i][j] = linieScanner.nextInt();
+                        }
                     }
+                    //linieScanner.close();
                 }
-                linieScanner.close();
+
+                int startL = scanner.nextInt();
+                int startC = scanner.nextInt();
+                int stopL  = scanner.nextInt();
+                int stopC  = scanner.nextInt();
+                //scanner.close();
+
+                Locatie start = new Locatie(startL, startC);
+                Locatie stop  = new Locatie(stopL, stopC);
+
+                lee(labirint, start);
+
+                List<Locatie> drum = reconstituieDrum(labirint, start, stop);
+
+                if (!drum.isEmpty()) {
+                    writer.println(drum.size());
+                    for (Locatie p : drum) {
+                        writer.println(p.linie + " " + p.coloana);
+                    }
+                } else {
+                    writer.println("Nu exista drum.");
+                }
             }
 
-            int startL = scanner.nextInt();
-            int startC = scanner.nextInt();
-            int stopL  = scanner.nextInt();
-            int stopC  = scanner.nextInt();
-            scanner.close();
-
-            Locatie start = new Locatie(startL, startC);
-            Locatie stop  = new Locatie(stopL, stopC);
-
-            lee(labirint, start);
-
-            List<Locatie> drum = reconstituieDrum(labirint, start, stop);
-
-            if (!drum.isEmpty()) {
-                writer.println(drum.size());
-                for (Locatie p : drum) {
-                    writer.println(p.linie + " " + p.coloana);
-                }
-            } else {
-                writer.println("Nu exista drum.");
-            }
 
         } catch (Exception e) {
             System.out.println("Eroare: " + e.getMessage());
