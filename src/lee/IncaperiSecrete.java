@@ -7,14 +7,14 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class IncaperiSecrete {
-    static int[] dL = {0, 0, 1, -1};
+    static int[] dL = {0, 0, 1, - 1};
     static int[] dC = {1, -1, 0, 0};
 
     public static class Locatie {
         int linie, coloana;
-        public Locatie(int linie, int coloana) {
-            this.linie = linie;
-            this.coloana = coloana;
+        public Locatie(int l, int c) {
+            this.linie = l;
+            this.coloana = c;
         }
     }
 
@@ -22,38 +22,32 @@ public class IncaperiSecrete {
         String caleFisierIn = "data/lee/incaperi_secrete/in.txt";
         String caleFisierOut = "data/lee/incaperi_secrete/out.txt";
 
-
         try (PrintWriter writer = new PrintWriter(new File(caleFisierOut))){
-            File fisier = new File(caleFisierIn);
-            Scanner scanner = new Scanner(fisier);
+            Scanner scanner = new Scanner(new File(caleFisierIn));
 
-            int m = scanner.nextInt();
-            int n = scanner.nextInt();
-            scanner.nextLine();
+            int T = scanner.nextInt();
 
-            int[][] labirint = new int[m][n];
+            for (int t = 0; t < T; t++) {
+                int n = scanner.nextInt();
+                int m = scanner.nextInt();;
+                scanner.nextLine();
 
-            for (int i = 0; i < m; i++) {
-                String linieText = scanner.nextLine().trim();
-                String procesat = linieText.replace("-", " -").replace("0", " 0 ");
-                Scanner linieScanner = new Scanner(procesat);
-                for (int j = 0; j < n; j++) {
-                    if (linieScanner.hasNextInt()) {
-                        labirint[i][j] = linieScanner.nextInt();
+                int[][] labirint = new int[n][m];
+
+                for (int i = 0; i < n; i++) {
+                    String linieText = scanner.nextLine().trim();
+                    String procesat = linieText.replace("-", " -").replace("0", " 0 ");
+                    Scanner linieScanner = new Scanner(procesat);
+                    for (int j = 0; j < m; j++) {
+                        if (linieScanner.hasNextInt())
+                            labirint[i][j] = linieScanner.nextInt();
                     }
                 }
-                linieScanner.close();
+
+                int rez = detIncaperiSecrete(labirint, n, m);
+                writer.println(rez);
             }
 
-            for (int i = 0; i < m; i++) {
-                System.out.println();
-                for (int j = 0; j < n; j++) {
-                    System.out.print(labirint[i][j] + " ");
-                }
-            }
-
-            int rezultat = determinaIncaperiSecrete(labirint, m, n);
-            writer.println(rezultat);
 
         } catch (Exception e) {
             System.out.println("Eroare la procesarea fisierului: " + e.getMessage());
@@ -61,12 +55,12 @@ public class IncaperiSecrete {
         }
     }
 
-    public static int determinaIncaperiSecrete(int[][] a, int m, int n) {
+    public static int detIncaperiSecrete(int[][] a, int n, int m) {
         int nr = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 if (a[i][j] == 0) {
-                    nr = nr + 1;
+                    nr++;
                     lee(a, new Locatie(i, j));
                 }
             }
@@ -75,8 +69,8 @@ public class IncaperiSecrete {
     }
 
     public static void lee(int[][] labirint, Locatie start) {
-        int m = labirint.length;
-        int n = labirint[0].length;
+        int n = labirint.length;
+        int m = labirint[0].length;
 
         labirint[start.linie][start.coloana] = 1;
 
@@ -84,15 +78,19 @@ public class IncaperiSecrete {
         q.add(start);
 
         while (!q.isEmpty()) {
-            Locatie cur = q.poll();
+            Locatie curent = q.poll();
+
             for (int i = 0; i < 4; i++) {
-                int nL = cur.linie + dL[i];
-                int nC = cur.coloana + dC[i];
-                if (nL >= 0 && nL < m && nC >= 0 && nC < n && labirint[nL][nC] == 0) {
-                    labirint[nL][nC] = labirint[cur.linie][cur.coloana] + 1;
+                int nL = curent.linie + dL[i];
+                int nC = curent.coloana + dC[i];
+                if (nL >= 0 && nL < n && nC >= 0 && nC < m && labirint[nL][nC] == 0) {
+                    labirint[nL][nC] = labirint[curent.linie][curent.coloana] + 1;
                     q.add(new Locatie(nL, nC));
                 }
             }
         }
     }
+
+
+
 }

@@ -29,14 +29,12 @@ public class VrajitoriComori {
             int startL = scanner.nextInt();
             int startC = scanner.nextInt();
 
-            // Pas 1: marcam toate celulele periculoase
-            // periculos[i][j] = true daca e V sau vecin cu V
             boolean[][] periculos = new boolean[m][n];
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     if (labirint[i][j] == 'V') {
-                        periculos[i][j] = true;           // celula vrajitorului
-                        for (int d = 0; d < 8; d++) {     // toti cei 8 vecini
+                        periculos[i][j] = true;
+                        for (int d = 0; d < 8; d++) {
                             int ni = i + dL[d];
                             int nj = j + dC[d];
                             if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
@@ -47,8 +45,6 @@ public class VrajitoriComori {
                 }
             }
 
-            // Pas 2: BFS din start, doar prin celule sigure (0 sau C, nepericulos)
-            // Startul: daca e periculos, nu putem pleca de acolo -> 0 comori
             int comori = 0;
 
             if (!periculos[startL][startC]) {
@@ -57,7 +53,6 @@ public class VrajitoriComori {
                 coada.add(new int[]{startL, startC});
                 vizitat[startL][startC] = true;
 
-                // verificam daca startul e comoara
                 if (labirint[startL][startC] == 'C') comori++;
 
                 while (!coada.isEmpty()) {
