@@ -44,7 +44,7 @@ public class LIS {
         for (int i = n - 2; i >= 0; i--) {
             int max = 0;
             for (int j = i + 1; j < n; j++) {
-                if (a[i] <= a[j] && lung[j] > max) {
+                if (a[i] <= a[j] && max < lung[j]) {
                     max = lung[j];
                 }
             }
@@ -56,6 +56,7 @@ public class LIS {
     public static void TiparesteLIS(int[] a, int n, int[] lung) {
         int max = lung[0];
         int poz = 0;
+
         for (int i = 1; i < n; i++) {
             if (max < lung[i]) {
                 max = lung[i];
@@ -65,17 +66,16 @@ public class LIS {
 
         printWriter.println(max);
         printWriter.print(a[poz] + " ");
-
-        int lungRamasa = max - 1;
+        int lungRamas = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
-            if (lung[i] == lungRamasa && a[i] >= a[poz]) {
+            if (lung[i] == lungRamas && a[i] >= a[poz]) {
                 printWriter.print(a[i] + " ");
 
                 poz = i;
-                lungRamasa--;
+                lungRamas--;
 
-                if (lungRamasa == 0) break;
+                if (lungRamas == 0) break;
             }
         }
         printWriter.println();

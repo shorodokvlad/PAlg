@@ -17,24 +17,27 @@ public class TurnCutii {
 
             printWriter = writer;
 
-            while (sc.hasNext()) {
+            int T = sc.nextInt();
+            for (int t = 0; t < T; t++) {
                 int n = sc.nextInt();
-                int[] lungime = new int[n];
-                int[] latime = new int[n];
-                int[] inaltime = new int[n];
+
+                int[] lun = new int[n];
+                int[] lat = new int[n];
+                int[] h = new int[n];
 
                 for (int i = 0; i < n; i++) {
-                    lungime[i] = sc.nextInt();
-                    latime[i] = sc.nextInt();
-                    inaltime[i] = sc.nextInt();
+                    lun[i] = sc.nextInt();
+                    lat[i] = sc.nextInt();
+                    h[i] = sc.nextInt();
                 }
 
                 int[] aria = new int[n];
-                for (int i = 0; i < n; i++)
-                    aria[i] = lungime[i] * latime[i];
+                for (int i = 0; i < n; i++) {
+                    aria[i] = lat[i] * lun[i];
+                }
 
-                int[] lung = LIS(lungime, aria);
-                TiparesteLIS(lung, lungime, latime, inaltime, aria);
+                int[] lung = LIS(lun, aria);
+                TiparesteLIS(lun, lat, h, aria, lung);
             }
 
         } catch (Exception e) {
@@ -42,10 +45,9 @@ public class TurnCutii {
         }
     }
 
-    public static int[] LIS(int[] lungime, int[] aria) {
-        int n = lungime.length;
+    public static int[] LIS(int[] lun, int[] aria) {
+        int n = lun.length;
         int[] lung = new int[n];
-
         lung[n - 1] = 1;
 
         for (int i = n - 2; i >= 0; i--) {
@@ -61,8 +63,9 @@ public class TurnCutii {
         return lung;
     }
 
-    public static void TiparesteLIS(int[] lung, int[] lungime, int[] latime, int[] h, int[] aria) {
-        int n = lung.length;
+
+    public static void TiparesteLIS(int[] lun, int[] lat, int[] h, int[] aria, int[] lung) {
+        int n = lun.length;
         int max = 0;
         int poz = 0;
 
@@ -72,14 +75,14 @@ public class TurnCutii {
                 poz = i;
             }
         }
-        printWriter.println(max);
-        printWriter.println(lungime[poz] + " " + latime[poz] + " " + h[poz]);
 
+        printWriter.println(max);
+        printWriter.println(lun[poz] + " " + lat[poz] + " " + h[poz]);
         int lungRamas = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
             if (lung[i] == lungRamas && aria[i] <= aria[poz]) {
-                printWriter.println(lungime[i] + " " + latime[i] + " " + h[i]);
+                printWriter.println(lun[i] + " " + lat[i] + " " + h[i]);
 
                 aria[poz] = aria[i];
                 lungRamas--;

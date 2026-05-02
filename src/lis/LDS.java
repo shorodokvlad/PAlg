@@ -33,7 +33,6 @@ public class LDS {
             e.printStackTrace();
         }
     }
-
     public static int[] LDS(int[] a) {
         int n = a.length;
         int[] lung = new int[n];
@@ -41,7 +40,7 @@ public class LDS {
         for (int i = n - 1; i >= 0; i--) {
             int max = 0;
             for (int j = i + 1; j < n; j++) {
-                if (a[i] > a[j] && lung[j] > max) {
+                if (a[i] > a[j] && max < lung[j]) {
                     max = lung[j];
                 }
             }
@@ -60,21 +59,24 @@ public class LDS {
                 poz = i;
             }
         }
+
         printWriter.println(max);
         printWriter.print(a[poz] + " ");
-        int lungRamasa = max - 1;
+        int lungRamas = max - 1;
 
         for (int i = poz + 1; i < n; i++) {
-            if (lung[i] == lungRamasa && a[i] < a[poz]) {
+            if (lung[i] == lungRamas && a[i] < a[poz]) {
                 printWriter.print(a[i] + " ");
-                poz = i;
-                lungRamasa--;
 
-                if (lungRamasa == 0) break;
+                poz = i;
+                lungRamas--;
+
+                if (lungRamas == 0) break;
             }
         }
         printWriter.println();
     }
+
 
     public static int[] LDSImpar(int[] a) {
         int n = a.length;
@@ -117,9 +119,7 @@ public class LDS {
                 printWriter.print(a[i] + " ");
                 poz = i;
                 lungRamas--;
-                if (lungRamas == 0) {
-                    break;
-                }
+                if (lungRamas == 0) break;
             }
         }
         printWriter.println();
