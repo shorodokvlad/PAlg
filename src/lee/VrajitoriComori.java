@@ -4,8 +4,8 @@ import java.util.*;
 import java.io.*;
 
 public class VrajitoriComori {
-    static int[] dL = {0,  0,  1, -1,  1,  1, -1, -1};
-    static int[] dC = {1, -1,  0,  0,  1, -1,  1, -1};
+    static int[] dL = {0, 0, 1, -1, 1, 1, -1, 1};
+    static int[] dC = {1, -1, 0, 0, 1, -1, 1, -1};
 
     public static void main(String[] args) {
         String caleFisierIn  = "data/lee/vrajitori_comori/in.txt";
@@ -14,68 +14,66 @@ public class VrajitoriComori {
         try (PrintWriter writer = new PrintWriter(new File(caleFisierOut))) {
             Scanner scanner = new Scanner(new File(caleFisierIn));
 
-            int m = scanner.nextInt();
             int n = scanner.nextInt();
+            int m = scanner.nextInt();
             scanner.nextLine();
 
-            char[][] labirint = new char[m][n];
-            for (int i = 0; i < m; i++) {
-                String linie = scanner.nextLine().trim();
-                for (int j = 0; j < n; j++) {
+            char[][] labirint = new char[n][m];
+
+            for (int i = 0; i < n; i++) {
+                String linie = scanner.nextLine();
+                for (int j = 0; j < m; j++)
                     labirint[i][j] = linie.charAt(j);
-                }
             }
 
             int startL = scanner.nextInt();
             int startC = scanner.nextInt();
 
-            boolean[][] periculos = new boolean[m][n];
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
+            boolean[][] periculos = new boolean[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
                     if (labirint[i][j] == 'V') {
                         periculos[i][j] = true;
                         for (int d = 0; d < 8; d++) {
                             int ni = i + dL[d];
                             int nj = j + dC[d];
-                            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                            if (ni >= 0 && ni < n && nj >= 0 && nj < m)
                                 periculos[ni][nj] = true;
-                            }
                         }
                     }
                 }
             }
 
             int comori = 0;
-
             if (!periculos[startL][startC]) {
-                boolean[][] vizitat = new boolean[m][n];
-                Queue<int[]> coada = new LinkedList<>();
-                coada.add(new int[]{startL, startC});
+                boolean[][] vizitat = new boolean[n][m];
+                Queue<int[]> q = new LinkedList<>();
+                q.add(new int[]{startL, startC});
                 vizitat[startL][startC] = true;
 
                 if (labirint[startL][startC] == 'C') comori++;
 
-                while (!coada.isEmpty()) {
-                    int[] cur = coada.poll();
-                    int cl = cur[0], cc = cur[1];
+                while (!q.isEmpty()) {
+                    int[] curent = q.poll();
+                    int cL = curent[0], cC = curent[1];
 
                     for (int d = 0; d < 8; d++) {
-                        int nl = cl + dL[d];
-                        int nc = cc + dC[d];
+                        int nL = cL + dL[d];
+                        int nC = cC + dC[d];
 
-                        if (nl >= 0 && nl < m && nc >= 0 && nc < n
-                                && !vizitat[nl][nc]
-                                && !periculos[nl][nc]
-                                && labirint[nl][nc] != 'V') {
-                            vizitat[nl][nc] = true;
-                            if (labirint[nl][nc] == 'C') comori++;
-                            coada.add(new int[]{nl, nc});
+                        if (nL >= 0 && nL < n && nC >= 0 && nC < m && !vizitat[nL][nC] && !periculos[nL][nC] && labirint[nL][nC] != 'V') {
+                            vizitat[nL][nC] = true;
+                            if (labirint[nL][nC] == 'C')
+                                comori++;
+                            q.add(new int[] {nL, nC});
                         }
                     }
                 }
             }
 
             writer.println(comori);
+
+
 
         } catch (Exception e) {
             System.out.println("Eroare: " + e.getMessage());
