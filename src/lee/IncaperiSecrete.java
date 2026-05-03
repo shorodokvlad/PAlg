@@ -3,13 +3,11 @@ package lee;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class IncaperiSecrete {
-    static int[] dL = {0, 0, 1, - 1};
-    static int[] dC = {1, -1, 0, 0};
-
     public static class Locatie {
         int linie, coloana;
         public Locatie(int l, int c) {
@@ -17,6 +15,8 @@ public class IncaperiSecrete {
             this.coloana = c;
         }
     }
+    public static int[] dL = {0, 0, 1, -1};
+    public static int[] dC = {-1, 1, 0, 0};
 
     public static void main(String[] args) {
         String caleFisierIn = "data/lee/incaperi_secrete/in.txt";
@@ -25,11 +25,11 @@ public class IncaperiSecrete {
         try (PrintWriter writer = new PrintWriter(new File(caleFisierOut))){
             Scanner scanner = new Scanner(new File(caleFisierIn));
 
-            int T = scanner.nextInt();
+            int T = Integer.parseInt(scanner.nextLine().trim());
 
             for (int t = 0; t < T; t++) {
                 int n = scanner.nextInt();
-                int m = scanner.nextInt();;
+                int m = scanner.nextInt();
                 scanner.nextLine();
 
                 int[][] labirint = new int[n][m];
@@ -44,31 +44,30 @@ public class IncaperiSecrete {
                     }
                 }
 
-                int rez = detIncaperiSecrete(labirint, n, m);
+                int rez = DeterminaIncaperiSecrete(labirint, n, m);
                 writer.println(rez);
+
             }
-
-
         } catch (Exception e) {
             System.out.println("Eroare la procesarea fisierului: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static int detIncaperiSecrete(int[][] a, int n, int m) {
+    public static int DeterminaIncaperiSecrete(int[][] a, int n, int m) {
         int nr = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (a[i][j] == 0) {
-                    nr++;
-                    lee(a, new Locatie(i, j));
+                    nr = nr + 1;
+                    Lee(a, new Locatie(i, j));
                 }
             }
         }
         return nr;
     }
 
-    public static void lee(int[][] labirint, Locatie start) {
+    public static void Lee(int[][] labirint, Locatie start) {
         int n = labirint.length;
         int m = labirint[0].length;
 
@@ -90,7 +89,4 @@ public class IncaperiSecrete {
             }
         }
     }
-
-
-
 }
