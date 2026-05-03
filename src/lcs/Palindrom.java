@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class LCS {
+public class Palindrom {
 
     static PrintWriter printWriter;
 
     public static void main(String[] args) {
-        String caleFisierIn = "data/lcs/lcs/in.txt";
-        String caleFisierOut = "data/lcs/lcs/out.txt";
+        String caleFisierIn = "data/lcs/palindrom/in.txt";
+        String caleFisierOut = "data/lcs/palindrom/out.txt";
 
         try (Scanner sc = new Scanner(new File(caleFisierIn));
              PrintWriter writer = new PrintWriter(new File(caleFisierOut))) {
@@ -27,21 +27,24 @@ public class LCS {
                     a[i] = sc.nextInt();
                 }
 
-                int m = sc.nextInt();
-                int[] b = new int[m];
-                for (int j = 0; j < m; j++) {
-                    b[j] = sc.nextInt();
-                }
-
-                int[][] lung = LCS(a, n, b, m);
-                TiparesteLCS(a, n, b, m, lung);
-
+                CelMaiLungPalindrom(a, n);
 
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void CelMaiLungPalindrom(int[] a, int n) {
+        int[] a2 = new int[n];
+
+        for (int i = 0; i < n - 1; i++) {
+            a2[i] = a[n - 1 - i];
+        }
+
+        int[][] lung = LCS(a, n, a2, n);
+        TiparesteLCS(a, n, a2, n, lung);
     }
 
     public static int[][] LCS(int[] a, int n, int[] b, int m) {
@@ -103,6 +106,8 @@ public class LCS {
         for (int s : subsecventa) {
             printWriter.print(s + " ");
         }
+
+        printWriter.println();
     }
 
 

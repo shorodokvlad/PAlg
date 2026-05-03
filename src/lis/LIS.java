@@ -108,4 +108,3 @@ public class LIS {
         printWriter.println();
     }
 }
-

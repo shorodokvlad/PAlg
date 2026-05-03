@@ -5,14 +5,12 @@ import java.io.*;
 
 public class ParcurgereLabirint {
     public static class Locatie {
-        public int linie, coloana;
-
+        int linie, coloana;
         public Locatie(int l, int c) {
             this.linie = l;
             this.coloana = c;
         }
     }
-
     static int[] dL = {0, 0, 1, -1};
     static int[] dC = {1, -1, 0, 0};
 
@@ -28,24 +26,23 @@ public class ParcurgereLabirint {
             for (int t = 0; t < T; t++) {
                 int n = scanner.nextInt();
                 int m = scanner.nextInt();
-
                 scanner.nextLine();
 
                 int[][] labirint = new int[n][m];
 
                 for (int i = 0; i < n; i++) {
-                    String linieText = scanner.nextLine().trim();
+                    String linieText = scanner.nextLine();
                     String procesat = linieText.replace("-", " -").replace("0", " 0 ");
                     Scanner linieScanner = new Scanner(procesat);
                     for (int j = 0; j < m; j++) {
-                        if (linieScanner.hasNextInt()) {
+                        if (linieScanner.hasNextInt())
                             labirint[i][j] = linieScanner.nextInt();
-                        }
                     }
                 }
 
                 int startL = scanner.nextInt();
                 int startC = scanner.nextInt();
+
                 int stopL = scanner.nextInt();
                 int stopC = scanner.nextInt();
 
@@ -63,6 +60,7 @@ public class ParcurgereLabirint {
                 } else {
                     writer.println("Nu exista drum.");
                 }
+
             }
 
 
