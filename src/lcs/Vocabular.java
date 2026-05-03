@@ -17,28 +17,27 @@ public class Vocabular {
 
             printWriter = writer;
 
-
             int n = sc.nextInt();
             String[] dictionar = new String[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 dictionar[i] = sc.next();
-            }
 
             int m = sc.nextInt();
             for (int k = 0; k < m; k++) {
                 String cuvant = sc.next();
 
                 String celMaiBun = dictionar[0];
-                int lcsMax = lungimeLCS(cuvant, dictionar[0]);
+                int max = LCS(cuvant, dictionar[0]);
 
-                for (int i = 1; i < n; i++) {
-                    int lcsActual = lungimeLCS(cuvant, dictionar[i]);
-                    if (lcsActual > lcsMax) {
-                        lcsMax = lcsActual;
+                for (int i = 0; i < n; i++) {
+                    int curent = LCS(cuvant, dictionar[i]);
+
+                    if (curent > max) {
+                        max = curent;
+
                         celMaiBun = dictionar[i];
                     }
                 }
-
                 printWriter.println(celMaiBun);
             }
 
@@ -47,34 +46,31 @@ public class Vocabular {
         }
     }
 
-    // returnează doar lungimea LCS dintre două cuvinte (ca char[])
-    static int lungimeLCS(String s1, String s2) {
+    public static int LCS(String s1, String s2) {
         int n = s1.length();
         int m = s2.length();
+
         int[][] lung = new int[n][m];
 
-        // prima celulă
-        lung[0][0] = (s1.charAt(0) == s2.charAt(0)) ? 1 : 0;
+        if (s1.charAt(0) == s2.charAt(0))
+            lung[0][0] = 1;
+        else
+            lung[0][0] = 0;
 
-        // prima coloană
         for (int i = 1; i < n; i++) {
-            if (s1.charAt(i) == s2.charAt(0)) {
+            if (s1.charAt(i) == s2.charAt(0))
                 lung[i][0] = 1;
-            } else {
+            else
                 lung[i][0] = lung[i - 1][0];
-            }
         }
 
-        // primul rând
         for (int j = 1; j < m; j++) {
-            if (s1.charAt(0) == s2.charAt(j)) {
+            if (s1.charAt(0) == s2.charAt(j))
                 lung[0][j] = 1;
-            } else {
+            else
                 lung[0][j] = lung[0][j - 1];
-            }
         }
 
-        // completăm matricea
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < m; j++) {
                 if (s1.charAt(i) == s2.charAt(j)) {
@@ -84,7 +80,6 @@ public class Vocabular {
                 }
             }
         }
-
         return lung[n - 1][m - 1];
     }
 }
