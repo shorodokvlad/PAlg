@@ -12,8 +12,8 @@ public class IesireDinLabirint {
         }
     }
 
-    static int[] dL = {0, 0, -1, 1};
-    static int[] dC = {1, -1, 0, 0};
+    public static int[] dL = {0, 0, 1, -1};
+    public static int[] dC = {1, -1, 0, 0};
 
     public static void main(String[] args) {
         String caleFisierIn  = "data/lee/iesire/in.txt";
